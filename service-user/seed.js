@@ -1,21 +1,18 @@
 var seeder = require('mongoose-seed');
 var mongoose = require('mongoose');
+const {DB_CONNECT} = process.env
 
 // Connect to MongoDB via Mongoose
-seeder.connect('mongodb://localhost:27017/db_panjikusumarizki_betest', {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: true,
-  useUnifiedTopology: true
-}, function () {
+seeder.connect(`${DB_CONNECT}`, {}, function () {
 
   // Load Mongoose models
   seeder.loadModels([
-    './models/Users'
+    './models/Users',
+    './models/RefreshToken'
   ]);
 
   // Clear specified collections
-  seeder.clearModels(['User'], function () {
+  seeder.clearModels(['User', 'RefreshToken'], function () {
 
     // Callback to populate DB once collections have been cleared
     seeder.populateModels(data, function () {
